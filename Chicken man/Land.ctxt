@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.params=nurth\ surth\ wust\ eust\ isMunster\ isSufe\ isUchieve\ hasSwurd\ hasShuld\ game1
+comment0.target=Land(boolean,\ boolean,\ boolean,\ boolean,\ boolean,\ boolean,\ boolean,\ boolean,\ boolean,\ Game)
+comment0.text=\r\n\ Default\ constructor\ for\ objects\ of\ class\ Land\r\n
+comment1.params=game
+comment1.target=void\ action(Game)
+comment2.params=game
+comment2.target=void\ enter(Game)
+numComments=3
