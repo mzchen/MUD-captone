@@ -20,7 +20,7 @@ public class Player
     public int rollDmg(int monsterRoll)
     {
         int roll = (int) Math.random()*100;
-        return Integer.compare(roll, monsterRoll);
+        return roll.compareTo(monsterRoll);
     }
 
     public void takeDamage()
@@ -32,6 +32,11 @@ public class Player
         else
         {
             hp -= Math.random() * 75;
+        }
+        if(hp < 0)
+        {
+            System.out.println("You have died from your body taking too much damage!");
+            die();
         }
     }
     public void heal()

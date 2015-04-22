@@ -38,11 +38,11 @@ public class Land
     public void action(Game game)
     {
         String action = s.next();
-        if(action == "fight")
+        if(action.equals("fight"))
         {
-            if(this.isMonster)
+            if(this.isMonster == true)
             {
-                if(game.player.rollDmg((int)Math.random() * 100) > 1)
+                if(game.player.rollDmg((int)Math.random() * 100) > 0)
                 {
                     if(game.player.hasSword())
                     {
@@ -70,10 +70,10 @@ public class Land
                 }
                 else
                 {
+                    System.out.println("You take some damage!");
                     game.player.takeDamage();
                     action(game);
                 }
-                
             }
             else
             {
@@ -81,9 +81,9 @@ public class Land
                 action(game);
             }
         }
-        if(action == "north")
+        else if(action.equals("north"))
         {
-            if(isMonster)
+            if(isMonster == true)
             {
                 System.out.println("There is a monster blocking your path!");
                 System.out.println("You take damage from the monster while distracted!");
@@ -93,9 +93,9 @@ public class Land
             else
             {
                 
-                if(north)
+                if(north == true)
                 {
-                    game.player.increaseRow();
+                    game.player.decreaseRow();
                     game.map[game.player.row()][game.player.column()].enter(game);
                 }
                 else
@@ -113,9 +113,9 @@ public class Land
                 }
             }
         }
-        if(action == "south")
+        else if(action.equals("south"))
         {
-            if(isMonster)
+            if(isMonster == true)
             {
                 System.out.println("There is a monster blocking your path!");
                 System.out.println("You take damage from the monster while distracted!");
@@ -125,9 +125,10 @@ public class Land
             else
             {
                 
-                if(south)
+                if(south == true)
                 {
                     game.player.increaseRow();
+                    game.map[game.player.row()][game.player.column()].enter(game);
                 }
                 else
                 {
@@ -139,13 +140,14 @@ public class Land
                     else
                     {
                         System.out.println("That way is blocked!");
+                        action(game);
                     }
                 }
             }
         }
-        if(action == "west")
+        else if(action.equals("west"))
         {
-            if(isMonster)
+            if(isMonster == true)
             {
                 System.out.println("There is a monster blocking your path!");
                 System.out.println("You take damage from the monster while distracted!");
@@ -155,13 +157,14 @@ public class Land
             else
             {
                 
-                if(west)
+                if(west == true)
                 {
                     game.player.decreaseCol();
+                    game.map[game.player.row()][game.player.column()].enter(game);
                 }
                 else
                 {
-                    if(game.player.row() == 3)
+                    if(game.player.row() == 0)
                     {
                         System.out.println("You, having foolishly walked off the end of the world, fall off and die.");
                         game.player.die();
@@ -169,13 +172,14 @@ public class Land
                     else
                     {
                         System.out.println("That way is blocked!");
+                        action(game);
                     }
                 }
             }
         }
-        if(action == "east")
+        else if(action.equals("east"))
         {
-            if(isMonster)
+            if(isMonster== true)
             {
                 System.out.println("There is a monster blocking your path!");
                 System.out.println("You take damage from the monster while distracted!");
@@ -185,9 +189,10 @@ public class Land
             else
             {
                 
-                if(east)
+                if(east == true)
                 {
                     game.player.increaseCol();
+                    game.map[game.player.row()][game.player.column()].enter(game);
                 }
                 else
                 {
@@ -199,9 +204,14 @@ public class Land
                     else
                     {
                         System.out.println("That way is blocked!");
+                        action(game);
                     }
                 }
             }
+        }
+        else
+        {
+            System.out.println("That is not a valid command. Dingus.");                                                                                          
         }
     }
 
@@ -216,33 +226,34 @@ public class Land
         {
             modifier = "n";
         }
-        //Checks if you're encountering a monster
+        
         if(isSafe)
         {
             game.player.heal();
         }
-        if(isMonster)
+        //Checks if you're encountering a monster
+        if(isMonster == true)
         {
-            System.out.println("There is a"+modifier+" " + adjective +" "+ monster + " before you! /nWhat do you do?");
+            System.out.println("There is a"+modifier+" " + adjective +" "+ monster + " before you! \nWhat do you do?");
             action(game);
         }
         else
         {
             //Tells the player where they can go
-            System.out.println("You see an opening to the");
-            if(north)
+            System.out.print("You see an opening to the ");
+            if(north == true)
             {
                 System.out.print("north, ");
             }
-            if(south)
+            if(south == true)
             {
                 System.out.print("south, "); 
             }
-            if(east)
+            if(east == true)
             {
                 System.out.print("east, ");
             }
-            if(west)
+            if(west == true)
             {
                 System.out.print("west, ");
             }
@@ -266,7 +277,8 @@ public class Land
                 System.out.println("You see the end of the world to your east.");
                 System.out.println("It would be wise not to walk off.");
             }
+            System.out.println("");
         }
-
+        action(game);
     }
 }
