@@ -10,7 +10,7 @@ public class Monster
         subBoss = subboss;
         if(boss)
         {
-            hp = hp*4;
+            hp = hp*10;
         }
         if(subBoss)
         {

@@ -5,7 +5,7 @@ public class Land
     private boolean north, south, east, west, isMonster, isSafe, isAchieve, hasSword, hasShield;
     private String[] monsters = {"Orc", "Warlock", "Chicken", "Hog", "Bureaucrat", "Tax collector", "Goblin", "Lawyer", "Witch", "Shaman", "Assassin"};
     private String[] adjectives = {"Evil", "Greedy", "Malicious", "Fat", "Chinese", "Angry", "Nasty", "Large", "Brutal", "Sleazy", "Sneaky", "Radioactive", "Malevolent",
-        "Mugwump", "Orc", "Underling", "Overly-Ambitious", "Underachieving", "Awful", "Ugly", "Orange", "Old", "Demonic"};
+            "Mugwump", "Orc", "Underling", "Overly-Ambitious", "Underachieving", "Awful", "Ugly", "Orange", "Old", "Demonic"};
     private Monster monster;
     private Game game;
     /**
@@ -20,18 +20,24 @@ public class Land
         isMonster = isMunster;
         hasSword = hasSwurd;
         hasShield = hasShuld;
+        isAchieve = isUchieve;
         // if the land has a shield or sword, the monster is a boss
         if(hasSword || hasShield)
         {
             monster = new Monster(false, true);
         }
-        isSafe = isSufe;
-        isAchieve = isUchieve;
-        // if the land has a
-        if(isAchieve)
+        else if(isAchieve)
         {
             monster = new Monster(true, false);
         }
+        else
+        {
+            monster = new Monster(false, false);
+        }
+        isSafe = isSufe;
+
+        // if the land has a
+
         game = game1;
     }
 
@@ -42,7 +48,9 @@ public class Land
         {
             if(this.isMonster == true)
             {
-                if(game.player.rollDmg((int)Math.random() * 100) > 0)
+                int monstRoll = (int) (Math.random() * 100);
+                int win = game.player.rollDmg(monstRoll);
+                if(win > 0)
                 {
                     if(game.player.hasSword())
                     {
@@ -50,29 +58,46 @@ public class Land
                         monster.takeDamage();
                     }
                     System.out.println("The monster takes damage!");
+                    System.out.println("The monster has " + monster.hp() + " health remaining!");
                     monster.takeDamage();
                     if(monster.hp() < 0)
                     {
                         System.out.println("You have defeated the monster!");
                         this.isMonster = false;
-                        if(hasShield)
+                        if(hasShield == true)
                         {
                             game.player.getShield();
                         }
-                        if(hasSword)
+                        if(hasSword == true)
                         {
                             game.player.getSword();
                         }
-                        this.enter(game);
-                        action(game);
+                        if(isAchieve == true)
+                        {
+                            System.out.println("You have beat the boss of this world! You win!");
+                            game.player.die(true);
+                        }
+                        else
+                        {
+                            this.enter(game);
+                            action(game);
+                        }
                     }
-                    action(game);
                 }
                 else
                 {
                     System.out.println("You take some damage!");
+                    System.out.println("You have " + game.player.hp() + " health remaining!");
                     game.player.takeDamage();
-                    action(game);
+                    if(game.player.hp() < 0)
+                    {
+                        System.out.println("You take your last amount of damage and die!");
+                        game.player.die(false);
+                    }
+                    else
+                    {
+                        action(game);
+                    }
                 }
             }
             else
@@ -92,7 +117,7 @@ public class Land
             }
             else
             {
-                
+
                 if(north == true)
                 {
                     game.player.decreaseRow();
@@ -103,7 +128,7 @@ public class Land
                     if(game.player.row() == 0)
                     {
                         System.out.println("You, having foolishly walked off the end of the world, fall off and die.");
-                        game.player.die();
+                        game.player.die(false);
                     }
                     else
                     {
@@ -124,7 +149,7 @@ public class Land
             }
             else
             {
-                
+
                 if(south == true)
                 {
                     game.player.increaseRow();
@@ -135,7 +160,7 @@ public class Land
                     if(game.player.row() == 4)
                     {
                         System.out.println("You, having foolishly walked off the end of the world, fall off and die.");
-                        game.player.die();
+                        game.player.die(false);
                     }
                     else
                     {
@@ -156,7 +181,7 @@ public class Land
             }
             else
             {
-                
+
                 if(west == true)
                 {
                     game.player.decreaseCol();
@@ -164,10 +189,10 @@ public class Land
                 }
                 else
                 {
-                    if(game.player.row() == 0)
+                    if(game.player.column() == 0)
                     {
                         System.out.println("You, having foolishly walked off the end of the world, fall off and die.");
-                        game.player.die();
+                        game.player.die(false);
                     }
                     else
                     {
@@ -188,7 +213,7 @@ public class Land
             }
             else
             {
-                
+
                 if(east == true)
                 {
                     game.player.increaseCol();
@@ -196,10 +221,10 @@ public class Land
                 }
                 else
                 {
-                    if(game.player.row() == 3)
+                    if(game.player.column() == 3)
                     {
                         System.out.println("You, having foolishly walked off the end of the world, fall off and die.");
-                        game.player.die();
+                        game.player.die(false);
                     }
                     else
                     {
@@ -211,7 +236,8 @@ public class Land
         }
         else
         {
-            System.out.println("That is not a valid command. Dingus.");                                                                                          
+            System.out.println("That is not a valid command. Dingus.");
+            action(game);
         }
     }
 
@@ -226,7 +252,7 @@ public class Land
         {
             modifier = "n";
         }
-        
+
         if(isSafe)
         {
             game.player.heal();
@@ -259,21 +285,25 @@ public class Land
             }
             if(game.player.row() == 0)
             {
+                System.out.println("");
                 System.out.println("You see the end of the world to your north.");
                 System.out.println("It would be wise not to walk off.");
             }
             if(game.player.row() == 4)
             {
+                System.out.println("");
                 System.out.println("You see the end of the world to your south.");
                 System.out.println("It would be wise not to walk off.");
             }
             if(game.player.column() == 0)
             {
+                System.out.println("");
                 System.out.println("You see the end of the world to your west.");
                 System.out.println("It would be wise not to walk off.");
             }
             if(game.player.column() == 3)
             {
+                System.out.println("");
                 System.out.println("You see the end of the world to your east.");
                 System.out.println("It would be wise not to walk off.");
             }

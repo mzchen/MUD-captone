@@ -7,23 +7,23 @@ public class Game
     public Game(String name)
     {
         player = new Player(name);
-        map[0][0] = new Land(false, false, false, true, true, false, false, false, false, this);
+        map[0][0] = new Land(false, true, false, true, true, false, false, false, false, this);
         map[0][1] = new Land(false, true, true, false, false, true, false, false, false, this);
         map[0][2] = new Land(false, true, false, true, false, true, false, false, false, this);
         map[0][3] = new Land(false, false, true, false, true, false, false, false, true, this);
         //done
-        map[1][0] = new Land(false, true, false, true, true, false, false, true, false, this);
-        map[1][1] = new Land(true, true, true, true, true, true, false, false, false, this);
+        map[1][0] = new Land(true, true, false, false, true, false, false, true, false, this);
+        map[1][1] = new Land(true, true, false, true, true, true, false, false, false, this);
         map[1][2] = new Land(true, true, true, true, false, true, false, false, false, this);
         map[1][3] = new Land(false, true, true, false, true, false, false, false, false, this);
         //done
         map[2][0] = new Land(true, false, false, false, true, false, true, false, false, this); // ACHIEVEMENT ROOM
-        map[2][1] = new Land(true, false, true, false, false, true, false, false, false, this);
+        map[2][1] = new Land(true, false, false, true, false, true, false, false, false, this);
         map[2][2] = new Land(true, true, true, false, true, true, false, false, false, this);
         map[2][3] = new Land(false, true, false, false, false, true, false, false, false, this);
         //done
         map[3][0] = new Land(false, true, false, true, false, false, false,false, false, this);
-        map[3][1] = new Land(true, true, true, true, false, true, false, false, false, this);
+        map[3][1] = new Land(true, true, true, true, false, true, false, false, false, this); // SPAWN ROOM
         map[3][2] = new Land(true, true, true, false, true, false, false, false, false, this);
         map[3][3] = new Land(false, true, true, false, true, false, false,   false, false, this);
         //done

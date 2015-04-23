@@ -19,8 +19,15 @@ public class Player
 
     public int rollDmg(int monsterRoll)
     {
-        int roll = (int) Math.random()*100;
-        return roll.compareTo(monsterRoll);
+        int roll = (int) (Math.random()*100);
+        if(roll >= monsterRoll)
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     public void takeDamage()
@@ -32,73 +39,92 @@ public class Player
         else
         {
             hp -= Math.random() * 75;
-        }
-        if(hp < 0)
-        {
-            System.out.println("You have died from your body taking too much damage!");
-            die();
-        }
+        }   
     }
+
     public void heal()
     {
         hp += Math.random() * 150;
     }
+
     public void getSword()
     {
         System.out.println( "After ripping out the mighty monster's organs and eating them, you find a Sword!" );
         System.out.println("Item gained: Sword (Increases combat damage) ");
         hasSword = true;
     }
+
     public void getShield()
-        {System.out.println( "You tear out the monster's skull, and it seems to be both sturdy and useful." );
+    {
+        System.out.println( "You tear out the monster's skull, and it seems to be both sturdy and useful." );
         System.out.println("Item gained: Shield (decreases combat damage taken  ) ");
         hasShield = true;
     }
+
     public boolean hasSword()
     {
         return hasSword;
     }
+
     public boolean hasShield()
     {
         return hasShield;
     }
+
     public boolean hasAchieved()
     {
         return hasAchieved;
     }
+
     public void achieve()
     {
         hasAchieved = true;
     }
+
     public int hp()
     {
         return hp;
     }
+
     public int row()
     {
         return row;
     }
+
     public int column()
     {
         return column;
     }
-    public void die()
+
+    public void die(boolean condition)
     {
-        System.out.println("GAME OVER");
+        //Checks if this condition of ending is death or winning
+        if(condition = false)
+        {
+            System.out.println("GAME OVER");
+        }
+        else
+        {
+            System.out.println("Nice work!");
+        }
         isAlive = false;
     }
+
     public void increaseRow()
     {
         row++;
     }
+
     public void increaseCol()
     {
         column++;
     }
+
     public void decreaseRow()
     {
         row--;
     }
+
     public void decreaseCol()
     {
         column--;
