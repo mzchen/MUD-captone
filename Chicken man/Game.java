@@ -1,12 +1,13 @@
 import java.util.Scanner;
 public class Game
 {
+    /** Contains the map with lands and the player. */
     Land[][] map = new Land[5][4];
-
     Player player;
-    public Game(String name)
+    public Game()
     {
-        player = new Player(name);
+        //Makes the player and the map
+        player = new Player();
         map[0][0] = new Land(false, true, false, true, true, false, false, false, false, this);
         map[0][1] = new Land(false, true, true, false, false, true, false, false, false, this);
         map[0][2] = new Land(false, true, false, true, false, true, false, false, false, this);

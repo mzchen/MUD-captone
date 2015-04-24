@@ -1,16 +1,18 @@
 public class Player
 {
+    /** The user */
     private int hp;
-    private String name;
+    //Decided not to have a name because noboy cares about individuality in a MUD.
+    //private String name;
     private int row;
     private int column;
     private boolean hasAchieved;
     private boolean hasShield;
     private boolean hasSword;
     private boolean isAlive = true;
-    public Player(String name1)
-    {
-        name = name1; 
+    public Player()
+    { 
+        //Sets health and spawn
         hp = 500;
         row = 3;
         column = 1;
@@ -19,6 +21,7 @@ public class Player
 
     public int rollDmg(int monsterRoll)
     {
+        //Combat mechanic
         int roll = (int) (Math.random()*100);
         if(roll >= monsterRoll)
         {
@@ -30,25 +33,34 @@ public class Player
         }
     }
 
-    public void takeDamage()
+    public void takeDamage(boolean boss)
     {
+        //Combat mechanic
+        int mod = 1;
+        if(boss == true)
+        {
+            //Increases damage if the enemy is a boss
+            mod = 2;
+        }
         if(hasShield)
         {
-            hp -= Math.random() * 75 / 2;
+            hp -= Math.random() * 75 * mod / 2;
         }
         else
         {
-            hp -= Math.random() * 75;
+            hp -= Math.random() * 75 * mod;
         }   
     }
 
     public void heal()
     {
-        hp += Math.random() * 150;
+        //Mechanic to help player recover from combats
+        hp += Math.random() * 125;
     }
 
     public void getSword()
     {
+        //Gives player increased combat damage
         System.out.println( "After ripping out the mighty monster's organs and eating them, you find a Sword!" );
         System.out.println("Item gained: Sword (Increases combat damage) ");
         hasSword = true;
@@ -56,11 +68,12 @@ public class Player
 
     public void getShield()
     {
+        //Reduces combat damage taken by player
         System.out.println( "You tear out the monster's skull, and it seems to be both sturdy and useful." );
         System.out.println("Item gained: Shield (decreases combat damage taken  ) ");
         hasShield = true;
     }
-
+    /** All of these methods are returning the player's status */
     public boolean hasSword()
     {
         return hasSword;
@@ -95,7 +108,9 @@ public class Player
     {
         return column;
     }
-
+    
+    /** All of these change the condition of the player, be it ending or movement */
+    
     public void die(boolean condition)
     {
         //Checks if this condition of ending is death or winning
