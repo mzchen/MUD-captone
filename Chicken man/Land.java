@@ -1,4 +1,4 @@
-import java.util.Scanner;
+ import java.util.Scanner;
 /**
  * The base of the game, decides all actions and reactions
  * 
@@ -93,6 +93,7 @@ public class Land
                         }
                         action(game);
                     }
+                    action(game);
                 }
                 else
                 {
